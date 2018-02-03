@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <center>Choose your color: <input type="color" id="col">
+            <p id="coltext"></p>
+            <button onclick="changeColName()">Change Color</button>
+            <br><br>
+            <canvas id="slate" height="500" width="500" style="border: black thin solid;"></canvas>
+            <br>
+            <button onclick="toggle()">Toggle Modes</button>
+            <button onclick="clearCanvas()">Clear Canvas</button>
+            <p id='mode'>Current Mode: Dot</p>
+            <p id='status'></p>
+        </center>
+        
+        <script src="clickdraw.js"></script>
+    </body>
+</html>
