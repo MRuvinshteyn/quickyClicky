@@ -12,6 +12,7 @@ ctx.fillStyle = '#000000';
 var mouseX;
 var mouseY;
 var mode = 'dot';
+var dotSize = 1;
 var corners = 0;
 var dots = 0;
 var rects = 0;
@@ -62,21 +63,34 @@ var toggle = function(){
         mode = 'rectangle';
         document.getElementById('mode').innerHTML = "Current Mode: Rectangle";
         document.getElementById('status').innerHTML = "Rectangles drawn: " + rects;
+        document.getElementById('dotSize').innerHTML = "";
     }
     else{
         corners = 0;
         mode = 'dot';
         document.getElementById('mode').innerHTML = "Current Mode: Dot";
         document.getElementById('status').innerHTML = "Dots drawn: " + dots;
+        document.getElementById('dotSize').innerHTML = "Dot Size: <input type='number' min=1 value=1 id='size'> &nbsp; <button id='subSize'>Change Dot Size</button>";
     }
     //console.log(mode);
+}
+
+//changes dot size according to user
+var changeDotSize = function(){
+    var newSize = document.getElementById('size').value;
+    if (newSize != null || newSize >= 0){
+        dotSize = newSize;
+    }
+    else{
+        dotSize = 1;
+    }
 }
 
 //draws according to mode
 var draw = function(e){
     getMousePos(e);
     if (mode == 'dot'){
-        ctx.fillRect(mouseX,mouseY,1,1);
+        ctx.fillRect(mouseX-(dotSize/2),mouseY-(dotSize/2),dotSize,dotSize);
         dots += 1;
         document.getElementById('status').innerHTML = "Dots drawn: " + dots;
     }
@@ -99,7 +113,13 @@ var draw = function(e){
     }
 }
 
+//adds event listeners to initialize the buttons
+document.getElementById('colName').addEventListener('click',changeColName);
+document.getElementById('changeSize').addEventListener('click',changeDotSize);
+document.getElementById('toggleMode').addEventListener('click',toggle);
+document.getElementById('clearCanv').addEventListener('click',clearCanvas)
 c.addEventListener('click',draw);
+
 changeColName();
 clearCanvas();
 document.getElementById('status').innerHTML = "Dots drawn: " + dots;
