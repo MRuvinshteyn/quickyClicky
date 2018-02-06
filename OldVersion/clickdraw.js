@@ -7,7 +7,6 @@
 var c = document.getElementById('slate');
 var ctx = c.getContext('2d');
 ctx.fillStyle = '#000000';
-ctx.beginPath();
 
 //variables used for drawing
 var mouseX;
@@ -19,7 +18,6 @@ var dots = 0;
 var rects = 0;
 var cornerX;
 var cornerY; 
-var fillChecked = false;
 
 //allows the user to change the fill color
 var changeColName = function(){
@@ -48,8 +46,6 @@ var clearCanvas = function(){
         document.getElementById('mode').innerHTML = "Current Mode: Rectangle";
         document.getElementById('status').innerHTML = "Rectangles drawn: " + rects;
     }
-    ctx.closePath();
-    ctx.beginPath();
 }
 
 //gets mouse position
@@ -64,12 +60,10 @@ var getMousePos = function(e){
 //toggles drawing mode
 var toggle = function(){
     if (mode == 'dot'){
-        fillChecked = document.getElementById('fillBool').checked;
         mode = 'rectangle';
         document.getElementById('mode').innerHTML = "Current Mode: Rectangle";
         document.getElementById('status').innerHTML = "Rectangles drawn: " + rects;
         document.getElementById('dotSize').innerHTML = "";
-        document.getElementById('checked').innerHTML = "";
     }
     else{
         corners = 0;
@@ -77,8 +71,6 @@ var toggle = function(){
         document.getElementById('mode').innerHTML = "Current Mode: Dot";
         document.getElementById('status').innerHTML = "Dots drawn: " + dots;
         document.getElementById('dotSize').innerHTML = "Dot Size: <input type='number' min=1 value=1 id='size'> &nbsp; <button id='subSize'>Change Dot Size</button>";
-        document.getElementById('checked').innerHTML = "<input type='checkbox' id='fillBool'> Fill in shapes/dots?";
-        document.getElementById('fillBool').checked = fillChecked;
     }
     //console.log(mode);
 }
@@ -98,13 +90,7 @@ var changeDotSize = function(){
 var draw = function(e){
     getMousePos(e);
     if (mode == 'dot'){
-        //ctx.fillRect(mouseX-(dotSize/2),mouseY-(dotSize/2),dotSize,dotSize);
-        ctx.arc(mouseX,mouseY,dotSize,0,2*Math.PI);
-        ctx.lineTo(mouseX,mouseY);
-        ctx.stroke();
-        if (document.getElementById('fillBool').checked){
-            ctx.fill();
-        }
+        ctx.fillRect(mouseX-(dotSize/2),mouseY-(dotSize/2),dotSize,dotSize);
         dots += 1;
         document.getElementById('status').innerHTML = "Dots drawn: " + dots;
     }
